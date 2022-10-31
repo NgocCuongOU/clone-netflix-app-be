@@ -16,16 +16,22 @@ router.post("/register", async (req, res) => {
     ).toString(),
   });
 
-  console.log("New user :>>", newUser);
-
   try {
     const user = await newUser.save();
 
     res.status(201);
-    res.json(user);
+    res.json({
+      statusCode: 201,
+      message: "Success",
+      data: user,
+    });
   } catch (err) {
     res.status(500);
-    res.json(err);
+    res.json({
+      statusCode: 500,
+      message: "Error",
+      data: err,
+    });
   }
 });
 
@@ -35,9 +41,10 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
 
     !user &&
-      res
-        .status(401)
-        .json("Something went wrong!!! - Wrong username or password!!!");
+      res.status(401).json({
+        statusCode: 401,
+        message: "Something went wrong!!! - Wrong username or password!!!",
+      });
 
     const passwordDecypted = crypto.AES.decrypt(
       user.password,
@@ -46,7 +53,10 @@ router.post("/login", async (req, res) => {
     const originalPass = passwordDecypted.toString(crypto.enc.Utf8);
 
     if (originalPass !== req.body.password) {
-      res.status(401).json("Wrong username or password!!!");
+      res.status(401).json({
+        statusCode: 401,
+        message: "Wrong username or password!!!",
+      });
     }
 
     const accessToken = jwt.sign(
@@ -57,9 +67,16 @@ router.post("/login", async (req, res) => {
 
     const { password, ...restInfo } = user._doc;
 
-    res.status(200).json({ ...restInfo, accessToken });
+    res.status(200).json({
+      statusCode: 200,
+      message: "Success",
+      data: { ...restInfo, accessToken },
+    });
   } catch (err) {
-    res.status(500).json("Request has error :>>>", err);
+    res.status(500).json({
+      statusCode: 500,
+      message: err,
+    });
   }
 });
 

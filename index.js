@@ -3,6 +3,7 @@ const app = new express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const authRouter = require("./src/routes/auth");
+const userRouter = require("./src/routes/user");
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ mongoose
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
 
 app.listen(8800, () => {
   console.log("Backend is running on localhost:8800");
