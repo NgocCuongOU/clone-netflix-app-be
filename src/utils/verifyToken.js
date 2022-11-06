@@ -9,7 +9,7 @@ function verifyAccessToken(req, res, next) {
     jwt.verify(accessToken, process.env.SECRET_KEY, (error, user) => {
       if (error)
         res.status(403).json({
-          statusCode: 403,
+          code: 403,
           message: "Access Token is invalid!!!",
         });
 
@@ -19,7 +19,7 @@ function verifyAccessToken(req, res, next) {
     });
   } else {
     return res.status(401).json({
-      statusCode: 401,
+      code: 401,
       message: "You are not authenticated!!!",
     });
   }

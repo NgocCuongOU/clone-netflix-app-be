@@ -21,14 +21,14 @@ router.post("/register", async (req, res) => {
 
     res.status(201);
     res.json({
-      statusCode: 201,
+      code: 201,
       message: "Success",
       data: user,
     });
   } catch (err) {
     res.status(500);
     res.json({
-      statusCode: 500,
+      code: 500,
       message: "Error",
       data: err,
     });
@@ -42,7 +42,7 @@ router.post("/login", async (req, res) => {
 
     !user &&
       res.status(401).json({
-        statusCode: 401,
+        code: 401,
         message: "Something went wrong!!! - Wrong username or password!!!",
       });
 
@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
 
     if (originalPass !== req.body.password) {
       res.status(401).json({
-        statusCode: 401,
+        code: 401,
         message: "Wrong username or password!!!",
       });
     }
@@ -68,13 +68,13 @@ router.post("/login", async (req, res) => {
     const { password, ...restInfo } = user._doc;
 
     res.status(200).json({
-      statusCode: 200,
+      code: 200,
       message: "Success",
       data: { ...restInfo, accessToken },
     });
   } catch (err) {
     res.status(500).json({
-      statusCode: 500,
+      code: 500,
       message: err,
     });
   }

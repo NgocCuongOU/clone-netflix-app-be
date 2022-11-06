@@ -29,17 +29,17 @@ router.put("/:id", verifyAccessToken, async (req, res) => {
       );
 
       res.status(200).json({
-        statusCode: 200,
+        code: 200,
         message: "Success",
         data: updatedUser,
       });
     } catch (err) {
-      res.status(500).json({ statusCode: 500, message: err });
+      res.status(500).json({ code: 500, message: err });
     }
   } else {
     res
       .status(403)
-      .json({ statusCode: 403, message: "You are not authorization!!!" });
+      .json({ code: 403, message: "You are not authorization!!!" });
   }
 });
 
@@ -50,18 +50,18 @@ router.delete("/:id", verifyAccessToken, async (req, res) => {
       await User.findByIdAndDelete(req.params.id);
 
       res.status(200).json({
-        statusCode: 200,
+        code: 200,
         message: "Success",
       });
     } catch (error) {
       res.status(500).json({
-        statusCode: 500,
+        code: 500,
         message: error,
       });
     }
   } else {
     res.status(403).json({
-      statusCode: 403,
+      code: 403,
       message: "You are not delete this account!!!",
     });
   }
@@ -75,13 +75,13 @@ router.get("/find/:id", async (req, res) => {
     const { password, ...restInfo } = user._doc;
 
     res.status(200).json({
-      statusCode: 200,
+      code: 200,
       message: "Success",
       data: restInfo,
     });
   } catch (error) {
     res.status(500).json({
-      statusCode: 500,
+      code: 500,
       message: error,
     });
   }
@@ -98,19 +98,19 @@ router.get("/", verifyAccessToken, async (req, res) => {
         : await User.find();
 
       res.status(200).json({
-        statusCode: 200,
+        code: 200,
         message: "Success",
         data: users,
       });
     } catch (error) {
       res.status(500).json({
-        statusCode: 500,
+        code: 500,
         message: error,
       });
     }
   } else {
     res.status(403).json({
-      statusCode: 403,
+      code: 403,
       message: "You are not allowed to see all users!!!",
     });
   }
@@ -152,13 +152,13 @@ router.get("/stats", async (req, res) => {
     ]);
 
     res.status(200).json({
-      statusCode: 200,
+      code: 200,
       message: "Success",
       data,
     });
   } catch (error) {
     res.status(500).json({
-      statusCode: 500,
+      code: 500,
       message: error,
     });
   }
